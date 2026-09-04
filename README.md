@@ -1,45 +1,43 @@
-# Mindstorms
+# Mindstorms Party Documentation
 
-Public documentation for the Mindstorms Party bachelor project at the University of Bayreuth.
+This repository contains the public project documentation for the Mindstorms Party bachelor project at the University of Bayreuth. It covers the desktop application, AR app, EV3 robot software, autonomous driving, and communication between the components.
 
-## Project poster
+## Documentation
 
-[View the final A1 poster](poster_robot_network.pdf)
+### System and integration manual
 
-The poster explains the robot-control system, collision avoidance, steering, and communication between the AR app, desktop application, and EV3 robots.
+**[Open the system manual](manual.pdf)** - 24 pages
 
-## System overview
+The manual explains how the complete system works. It covers:
 
-| Component | Role |
-| --- | --- |
-| AR App | Unity joystick and game interface |
-| Desktop | Camera tracking, route planning, collision avoidance, and path following |
-| EV3 robot | Rust-based motor execution, status reporting, and safety checks |
+- Desktop architecture and module responsibilities
+- Camera tracking, coordinate systems, and board navigation
+- Route planning, path following, and multi-robot collision avoidance
+- UDP, TCP, and MQTT communication
+- Robot discovery, session handling, and timing constants
+- AR app scenes, networking, input, and game flow
+- Cross-component interactions and logging
 
-## Network communication
+Start here for an architectural overview or to understand how information moves through the project.
 
-### UDP
+### Desktop API reference
 
-Compact binary motion packets keep control latency low. The AR app and desktop send fresh speed-and-turn commands to the robot at 20 Hz. UDP broadcasts discover robots on the local network, while heartbeats refresh their addresses and report state.
+**[Open the Doxygen reference](doxygen.pdf)** - 360 pages
 
-### TCP
+This generated reference documents the C++ desktop application in detail, including classes, namespaces, files, functions, and data structures. Use it when looking up a specific implementation or interface.
 
-The AR app and desktop exchange structured JSON game events over TCP. These messages carry events such as shop actions and shared game-state updates.
+### Robot and networking poster
 
-### MQTT
+**[Open the A1 project poster](poster_robot_network.pdf)**
 
-MQTT carries commands that require acknowledgements, including distance moves, turns, stops, and status requests. Clients reconnect automatically and restore their subscriptions after a connection loss.
+The poster provides a one-page visual overview of robot control, collision avoidance, steering, safety behavior, and the UDP, TCP, and MQTT channels connecting the AR app, desktop, and EV3 robots.
 
-## Autonomous driving
+## Main components
 
-The desktop plans routes with Dijkstra and uses grid-based A* when another robot blocks the route. A coordinator resolves path conflicts and can move a parked robot away from an occupied destination.
+| Component | Technology | Responsibility |
+| --- | --- | --- |
+| Desktop application | C++23, Qt6, OpenCV | Tracking, game logic, planning, collision avoidance, and path following |
+| AR app | Unity and C# | Joystick control, AR board view, and game interface |
+| EV3 robot | Rust on ev3dev | Motor execution, command handling, watchdog stops, and status reporting |
 
-ArUco markers provide each robot's position and heading. A camera homography converts image coordinates to centimetres. The path follower selects a lookahead target, calculates the heading error, and adjusts forward speed and turn rate until the robot reaches its destination.
-
-## EV3 control and safety
-
-The EV3 software runs natively in Rust. Separate workers receive UDP data, control the motors, process MQTT commands, and send heartbeats.
-
-- A 150 ms watchdog stops continuous motion when drive packets stop arriving.
-- A stale camera pose causes the desktop to command zero motion after 400 ms.
-- An MQTT stop request interrupts an active distance or turn command.
+For a guided explanation, read the system manual first. Use the Doxygen reference for implementation details and the poster for a compact visual summary.
