@@ -1,7 +1,0 @@
-# Three-robot header illustration
-
-Created with the built-in image generation tool. `ev3-game-style.png` was used only as a reference for the robot construction and rendering style.
-
-## Generation prompt
-
-Use case: stylized-concept. Asset type: transparent header illustration for an A1 university engineering poster. Using the reference only for the robot's EV3 kart construction and polished game-render style, create three matching white Mindstorms EV3 kart robots driving together in a dynamic staggered formation. Show one lead robot in front and two slightly smaller robots following behind, each with the white programmable brick, black side wheels, front caster and Technic-style frame clearly recognizable. Use a polished gameified 3D animation render with crisp forms, realistic plastic and rubber materials, and subtle teal rim light to suit a dark navy poster header. Compose the group as a wide horizontal image, approximately 3:1, in a three-quarter front view. Keep all three robots fully visible. Angle the lead robot slightly right and offset the followers behind it. Convey forward motion through wheel angles and restrained teal motion accents. Use a genuinely transparent background with alpha: no floor, panel, vignette or rectangular background. Preserve the recognizable robot construction, clean cutout edges and transparent padding. Avoid cropped or malformed parts, fused robots, people, text, letters, numbers, brand marks and watermarks.

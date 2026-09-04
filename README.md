@@ -1,33 +1,45 @@
 # Mindstorms
 
-Documentation for the Mindstorms Party robot-control and networking work at the University of Bayreuth.
+Public documentation for the Mindstorms Party bachelor project at the University of Bayreuth.
 
-## Poster
+## Project poster
 
-[Open the A1 poster](poster_robot_network.pdf)
+[View the final A1 poster](poster_robot_network.pdf)
 
-The poster covers:
+The poster explains the robot-control system, collision avoidance, steering, and communication between the AR app, desktop application, and EV3 robots.
 
-- EV3 motor control written in Rust
-- Differential-drive steering and watchdog stops
-- Camera-based path following and collision avoidance
-- UDP motion packets and device discovery
-- TCP game events
-- MQTT commands, acknowledgements and reconnect behavior
+## System overview
 
-## Files
+| Component | Role |
+| --- | --- |
+| AR App | Unity joystick and game interface |
+| Desktop | Camera tracking, route planning, collision avoidance, and path following |
+| EV3 robot | Rust-based motor execution, status reporting, and safety checks |
 
-- `poster_robot_network.pdf` - final A1 poster
-- `build_robot_network.py` - ReportLab poster generator
-- `poster_robot_network_notes.md` - source and implementation notes
-- `assets/` - university logo and poster illustrations
+## Network communication
 
-## Rebuild
+### UDP
 
-Install ReportLab and run:
+Compact binary motion packets keep control latency low. The AR app and desktop send fresh speed-and-turn commands to the robot at 20 Hz. UDP broadcasts discover robots on the local network, while heartbeats refresh their addresses and report state.
 
-```powershell
-python build_robot_network.py
-```
+### TCP
 
-The script writes `poster_robot_network.pdf` in the repository root.
+The AR app and desktop exchange structured JSON game events over TCP. These messages carry events such as shop actions and shared game-state updates.
+
+### MQTT
+
+MQTT carries commands that require acknowledgements, including distance moves, turns, stops, and status requests. Clients reconnect automatically and restore their subscriptions after a connection loss.
+
+## Autonomous driving
+
+The desktop plans routes with Dijkstra and uses grid-based A* when another robot blocks the route. A coordinator resolves path conflicts and can move a parked robot away from an occupied destination.
+
+ArUco markers provide each robot's position and heading. A camera homography converts image coordinates to centimetres. The path follower selects a lookahead target, calculates the heading error, and adjusts forward speed and turn rate until the robot reaches its destination.
+
+## EV3 control and safety
+
+The EV3 software runs natively in Rust. Separate workers receive UDP data, control the motors, process MQTT commands, and send heartbeats.
+
+- A 150 ms watchdog stops continuous motion when drive packets stop arriving.
+- A stale camera pose causes the desktop to command zero motion after 400 ms.
+- An MQTT stop request interrupts an active distance or turn command.
