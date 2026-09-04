@@ -260,7 +260,7 @@ for i,(title,a,b,col) in enumerate(workers):
     text(title,xx+11,1491,12.5,'Bold',col)
     text(a,xx+11,1511,11.2,'Regular',MUTED)
     text(b,xx+11,1526,11.2,'Regular',MUTED)
-para('<b>Two ways to move:</b> stream speed + turn or independent wheel speeds; queue <b>drive_for</b> and <b>turn</b> for distance and angle moves. The motor worker sends the completion ACK.',62,1555,652,14.2,18.5,maxh=38)
+para('<b>Motion commands:</b> stream speed + turn for continuous driving; queue <b>drive_for</b> and <b>turn</b> for distance and angle moves. The motor worker sends a completion ACK for queued moves.',62,1555,652,14.2,18.5,maxh=38)
 para('<b>Differential drive:</b> v<sub>L</sub> = v - ωb/2; v<sub>R</sub> = v + ωb/2.<br/>v: forward speed; ω: turn rate; b: wheel spacing.<br/>At the speed limit, both wheels slow together to keep the curve.<br/>Motors B/C; 56 mm wheels; b = 126 mm.',62,1599,450,13.2,16,maxh=65)
 # Turning symbol uses the same vector robot and palette as the path diagrams.
 rect(541,1599,173,64,'#F0F5F3',r=7)
