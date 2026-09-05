@@ -28,7 +28,7 @@ This generated reference documents the C++ desktop application in detail, includ
 
 ### Robot and networking poster
 
-**[Open the A1 project poster](poster_robot_network.pdf)**
+**[Open the A0 project poster](poster_robot_network.pdf)**
 
 The poster provides a one-page visual overview of robot control, collision avoidance, steering, safety behavior, and the UDP, TCP, and MQTT channels connecting the AR app, desktop, and EV3 robots.
 
